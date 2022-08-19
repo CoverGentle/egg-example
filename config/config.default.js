@@ -35,6 +35,9 @@ module.exports = appInfo => {
     origin: '*',
     allowMethods: 'GET,HEAD.PUT,POST,DELETE,PATCH',
   };
+  config.jwt = {
+    secret: 'shuaibo.tang',
+  };
 
   return {
     ...config,

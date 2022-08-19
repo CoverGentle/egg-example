@@ -13,4 +13,7 @@ module.exports = app => {
   // router.post('/createFruit', controller.fruits.createFruit);
 
   router.resources('fruits', '/fruits', controller.fruits);
+  router.get('/jwt', controller.jwt.index);
+  router.post('/jwtLogin', controller.jwt.doLogin);
+  // router.post('/jwtmessage', controller.jwt.getmessage);
 };
