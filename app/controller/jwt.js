@@ -8,7 +8,7 @@ class JwtController extends Controller {
       this.ctx.body = {
         code: 200,
         token,
-        msg: '用户名或密码错误',
+        msg: '登录成功',
       };
     } else {
       this.ctx.body = {
@@ -18,9 +18,11 @@ class JwtController extends Controller {
       };
     }
   }
-  // async getMessage() {
 
-  // }
+  async getMessage() {
+    const { ctx } = this;
+    ctx.body = 'hello jwt';
+  }
 
 
   async index() {

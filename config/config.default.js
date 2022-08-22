@@ -39,6 +39,16 @@ module.exports = appInfo => {
     secret: 'shuaibo.tang',
   };
 
+  config.sequelize = {
+    dialect: 'mysql',
+    database: 'xtbg',
+    host: 'localhost',
+    port: 3306,
+    username: 'root',
+    password: 'admin.1234',
+    timezone: '+08:00',
+  };
+
   return {
     ...config,
     ...userConfig,
