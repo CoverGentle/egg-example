@@ -9,13 +9,13 @@ function checkToken() {
         await next();
       } else {
         ctx.body = {
-          code: 4000,
+          code: 400,
           msg: '用户校验失败',
         };
       }
     } catch (error) {
       ctx.body = {
-        code: 4000,
+        code: 400,
         msg: '用户校验失败',
       };
     }
