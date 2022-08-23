@@ -39,15 +39,20 @@ module.exports = appInfo => {
     secret: 'shuaibo.tang',
   };
 
-  // config.sequelize = {
-  //   dialect: 'mysql',
-  //   database: 'xtbg',
-  //   host: 'localhost',
-  //   port: 3306,
-  //   username: 'root',
-  //   password: 'admin.1234',
-  //   timezone: '+08:00',
-  // };
+  config.sequelize = {
+    dialect: 'mysql',
+    database: 'management',
+    host: 'localhost',
+    port: 3306,
+    username: 'root',
+    password: 'admin.1234',
+    timezone: '+08:00',
+    define: {
+      timestamps: true, // 自动写入时间戳 created_at updated_at
+      paranoid: true, // 字段生成软删除时间戳 deleted_at
+      underscored: true, // 全部驼峰命名格式化
+    },
+  };
 
   return {
     ...config,

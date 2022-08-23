@@ -16,4 +16,7 @@ module.exports = app => {
   router.get('/jwt', controller.jwt.index);
   router.post('/jwtLogin', controller.jwt.doLogin);
   router.get('/jwtMessage', app.middleware.checkToken(), controller.jwt.getMessage);
+  router.resources('grade', '/grade', app.middleware.checkToken(), controller.grade);
+  router.resources('student', '/student', app.middleware.checkToken(), controller.student);
+
 };
