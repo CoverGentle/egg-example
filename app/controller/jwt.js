@@ -22,8 +22,8 @@ class JwtController extends Controller {
   async getMessage() {
     const { ctx } = this;
     ctx.body = {
-      code:200,
-      msg:'请求成功'
+      code: 200,
+      msg: '请求成功',
     };
   }
 

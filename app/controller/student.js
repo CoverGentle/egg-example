@@ -5,7 +5,7 @@ class StudentController extends Controller {
   // restful :index create destroy update
   // 查询
   async index() {
-    const studentList = this.ctx.service.student.getSrudentLit();
+    const studentList = await this.ctx.service.student.getSrudentLit();
     if (studentList) {
       this.ctx.body = {
         code: 200,
