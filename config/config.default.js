@@ -36,6 +36,7 @@ module.exports = appInfo => {
     allowMethods: 'GET,HEAD.PUT,POST,DELETE,PATCH',
   };
   config.jwt = {
+    expire: 7200, // token过期时间
     secret: 'shuaibo.tang',
   };
 
