@@ -3,27 +3,39 @@
 const Service = require('egg').Service;
 
 class UserService extends Service {
-  async getUserList(userInfo) {
+
+  // 通过用户名获取用户信息既登录
+  async getUserByName(username) {
     try {
-      const UserList = await this.app.model.User.findAll(
-        { where: {
-          username: userInfo,
-        } }
-      );
-      if (UserList) {
-        const token = this.app.jwt.sign(userInfo, this.app.config.jwt.secret);
-        this.ctx.body = {
-          code: 2000,
-          token,
-          msg: '登录成功',
-        };
-        return UserList;
-      }
+      const result = await this.app.model.User.findOne({
+        where: {
+          username,
+        },
+      });
+      return result;
     } catch (error) {
+      console.log(error);
       return null;
     }
   }
 
+  // 获取用户列表
+  async getUserList() {
+    try {
+      const getUserList = await this.app.model.User.findAll();
+      return getUserList;
+    } catch (error) {
+      return error;
+    }
+  }
+
+
+  // 获取用户个人信息
+  // async getUserInfo() {
+
+  // }
+
+  // 注册
   async register() {
     const user = this.ctx.request.body;
     const userInfo = this.app.model.User.create({

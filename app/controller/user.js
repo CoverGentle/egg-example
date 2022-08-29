@@ -3,30 +3,51 @@ const Controller = require('egg').Controller;
 class UserController extends Controller {
   // 登录
   async login() {
-    const user = this.ctx.request.body;
-    const userList = await this.ctx.service.user.getUserList(user.username);
-    console.log(userList, 'userListuserList');
+    const { username, password } = this.ctx.request.body;
+    const userInfo = await this.ctx.service.user.getUserByName(username);
+    if (!userInfo) {
+      this.ctx.body = {
+        code: 4000,
+        msg: '用户名不存在',
+      };
+      return;
+    }
+    if (userInfo.username !== username || userInfo.password !== password) {
+      this.ctx.body = {
+        code: 4001,
+        msg: '用户名或密码不正确',
+      };
+      return;
+    }
+    if (userInfo && userInfo.password === password) {
+      const token = this.app.jwt.sign(username, this.app.config.jwt.secret);
+      this.ctx.body = {
+        code: 2000,
+        token,
+        msg: '登录成功',
+      };
+      return;
+    }
   }
-  // 查询
-  // async index() {
-  //   const user = this.ctx.request.body;
-  //   const userList = await this.ctx.service.user.getUserList(user.username);
-  //   // console.log(userList, '12121212');
-  //   if (userList) {
-  //     this.ctx.body = {
-  //       code: 200,
-  //       data: userList,
-  //       msg: '请求成功',
-  //     };
-  //   } else {
-  //     this.ctx.body = {
-  //       code: 400,
-  //       data: null,
-  //       msg: '请求失败',
-  //     };
-  //   }
-  // }
+  // 获取用户列表
+  async index() {
+    const userList = await this.ctx.service.user.getUserList();
+    if (userList) {
+      this.ctx.body = {
+        code: 200,
+        userInfoList: userList,
+        msg: '获取用户列表',
+      };
+    } else {
+      this.ctx.body = {
+        code: 400,
+        userList: null,
+        msg: '获取失败',
+      };
+    }
+  }
 
+  // 注册
   async create() {
     const userInfo = await this.ctx.service.user.register();
     if (userInfo) {
@@ -35,7 +56,6 @@ class UserController extends Controller {
         msg: '注册成功',
       };
     }
-
   }
 }
 
