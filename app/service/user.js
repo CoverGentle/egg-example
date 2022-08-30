@@ -1,7 +1,7 @@
 // const user = require('../model/user');
 
 const Service = require('egg').Service;
-
+const utility = require('utility');
 class UserService extends Service {
 
   // 通过用户名获取用户信息既登录
@@ -29,20 +29,18 @@ class UserService extends Service {
     }
   }
 
-
-  // 获取用户个人信息
-  // async getUserInfo() {
-
-  // }
-
   // 注册
-  async register() {
-    const user = this.ctx.request.body;
-    const userInfo = this.app.model.User.create({
-      username: user.username,
-      password: user.password,
-    });
-    return userInfo;
+  async addUser(username, password) {
+    try {
+      const passwordMd5 = utility.md5(password);
+      const userInfo = this.app.model.User.create({
+        username,
+        password: passwordMd5,
+      });
+      return userInfo;
+    } catch (error) {
+      return null;
+    }
   }
 }
 

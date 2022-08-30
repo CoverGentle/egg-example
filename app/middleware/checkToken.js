@@ -9,14 +9,15 @@ function checkToken() {
         await next();
       } else {
         ctx.body = {
-          code: 400,
+          code: 4000,
           msg: '用户校验失败',
         };
       }
     } catch (error) {
+      console.log(error);
       ctx.body = {
-        code: 400,
-        msg: '用户校验失败',
+        code: 4000,
+        msg: 'token未通过验证',
       };
     }
   };
