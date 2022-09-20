@@ -21,6 +21,7 @@ module.exports = app => {
   router.post('/weather/single', controller.weather.getWeatherData);
   router.post('/weather/add', controller.weather.addWeatherData);
   router.get('/weather/city', controller.weather.getCityList);
+  router.get('/epidemic/info', controller.epidemic.getEpidemicInfo);
   router.resources('grade', '/grade', app.middleware.checkToken(), controller.grade);
   router.resources('student', '/student', app.middleware.checkToken(), controller.student);
   router.resources('user', '/user', app.middleware.checkToken(), controller.user);

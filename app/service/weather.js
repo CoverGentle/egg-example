@@ -25,15 +25,12 @@ class WeatherService extends Service {
 
   // 获取天气信息
   async getWeather(cityNum) {
-    console.log('getWeather');
     const { data } = await this.ctx.curl(`http://t.weather.sojson.com/api/weather/city/${cityNum}`, {
       method: 'get',
       rejectUnauthorized: false,
       dataType: 'json',
     });
-    const weatherData = {
-      weatherInfo: data.data.forecast.slice(0, 3),
-    };
+    const weatherData = data.data.forecast.slice(0, 7);
     return weatherData;
   }
 }
