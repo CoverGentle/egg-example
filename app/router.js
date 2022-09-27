@@ -5,7 +5,7 @@
  */
 module.exports = app => {
   const { router, controller } = app;
-  router.get('/', controller.home.index);
+  // router.get('/', controller.home.index);
   router.get('/getData', controller.home.getData);
   // router.get('/fruits', controller.fruits.index);
   // router.get('/fruits/:id', controller.fruits.getId);
@@ -25,5 +25,8 @@ module.exports = app => {
   router.resources('grade', '/grade', app.middleware.checkToken(), controller.grade);
   router.resources('student', '/student', app.middleware.checkToken(), controller.student);
   router.resources('user', '/user', app.middleware.checkToken(), controller.user);
+
+  // 微信公众号开发的接口
+  router.get('/wechat/check', controller.wechat.index.check);
 
 };

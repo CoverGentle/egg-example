@@ -18,7 +18,6 @@ class WeatherController extends Controller {
         msg: '失败',
       };
     }
-    console.log(data);
   }
   // 添加城市信息
   async addWeatherData() {

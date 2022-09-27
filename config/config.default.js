@@ -23,23 +23,31 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
+  //
   config.security = {
     csrf: {
       enable: false,
     },
   };
+
+  // 模板
   config.view = {
     defaultViewEngine: 'nunjucks',
   };
+
+  // 解决跨域问题
   config.cors = {
     origin: '*',
     allowMethods: 'GET,HEAD.PUT,POST,DELETE,PATCH',
   };
+
+  // jwt鉴权
   config.jwt = {
     expire: 7200, // token过期时间
     secret: 'shuaibo.tang',
   };
 
+  // 数据库配置
   config.sequelize = {
     dialect: 'mysql',
     database: 'management',
@@ -53,6 +61,12 @@ module.exports = appInfo => {
       paranoid: true, // 字段生成软删除时间戳 deleted_at
       underscored: true, // 全部驼峰命名格式化
     },
+  };
+  // 微信
+  config.wechat = {
+    appid: 'wxbdc937314035728b',
+    appsecret: '451f142e89d06d38545769a2395a7804',
+    Token: 'azsxdc1q2w3e4r',
   };
 
   return {
