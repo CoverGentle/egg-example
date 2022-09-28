@@ -6,7 +6,7 @@
 module.exports = app => {
   const { router, controller } = app;
   // router.get('/', controller.home.index);
-  router.get('/getData', controller.home.getData);
+  router.get('/', controller.home.getData);
   // router.get('/fruits', controller.fruits.index);
   // router.get('/fruits/:id', controller.fruits.getId);
   // router.get('/createPage', controller.fruits.createPage);
@@ -28,5 +28,6 @@ module.exports = app => {
 
   // 微信公众号开发的接口
   router.get('/wechat/check', controller.wechat.index.check);
+  router.get('/wechat/getAccessToken', controller.wechat.index.getAccessTokenInfo);
 
 };

@@ -10,6 +10,7 @@
 const crypto = require('crypto');
 const Service = require('egg').Service;
 class UserService extends Service {
+  // 检查公众号
   check() {
     const { signature, nonce, timestamp, echostr } = this.ctx.query;
     console.log(signature, 'signature');
@@ -20,6 +21,7 @@ class UserService extends Service {
     console.log(sha);
     return sha === signature ? echostr : null;
   }
+  // 获取
 }
 
 module.exports = UserService;
