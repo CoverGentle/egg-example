@@ -6,7 +6,7 @@
 module.exports = app => {
   const { router, controller } = app;
   // router.get('/', controller.home.index);
-  router.get('/', controller.home.getData);
+  router.get('/getData', controller.home.getData);
   // router.get('/fruits', controller.fruits.index);
   // router.get('/fruits/:id', controller.fruits.getId);
   // router.get('/createPage', controller.fruits.createPage);

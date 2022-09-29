@@ -12,13 +12,15 @@ const Service = require('egg').Service;
 class UserService extends Service {
   // 检查公众号
   check() {
+    console.log(this.ctx.query, 'this.ctx.query');
     const { signature, nonce, timestamp, echostr } = this.ctx.query;
+    console.log(signature, nonce, timestamp, echostr, 'signature, nonce, timestamp, echostr');
     console.log(signature, 'signature');
     const token = this.ctx.app.config.wechat.Token;
-    console.log(token);
+    console.log(token, 'token');
     const str = [ token, timestamp, nonce ].sort().join('');
     const sha = crypto.createHash('sha1').update(str).digest('hex');
-    console.log(sha);
+    console.log(sha, 'sha');
     return sha === signature ? echostr : null;
   }
   // 获取

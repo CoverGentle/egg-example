@@ -12,6 +12,15 @@ module.exports = appInfo => {
    **/
   const config = exports = {};
 
+  // 配置启动端口号
+  config.cluster = {
+    listen: {
+      path: '',
+      port: 7001,
+      hostname: '127.0.0.1',
+    },
+  };
+
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1660722503922_3870';
 
@@ -62,11 +71,25 @@ module.exports = appInfo => {
       underscored: true, // 全部驼峰命名格式化
     },
   };
+
+  // mysql数据库配置
+  config.mysql = {
+    // 单数据库配置
+    client: {
+      host: 'localhost',
+      port: 3306,
+      user: 'root',
+      password: 'admin.1234',
+      database: 'management',
+    },
+    app: true,
+    agent: false,
+  };
   // 微信
   config.wechat = {
     appid: 'wxbdc937314035728b',
     appsecret: '451f142e89d06d38545769a2395a7804',
-    Token: 'azsxdc1q2w3e4r',
+    Token: 'wxtoken',
   };
 
   return {

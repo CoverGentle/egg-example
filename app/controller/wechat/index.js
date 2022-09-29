@@ -25,5 +25,7 @@ class wechatController extends Controller {
     console.log(accessToken, 'accessToken');
   }
 
+  //
+
 }
 module.exports = wechatController;

@@ -2,6 +2,7 @@
 
 const Service = require('egg').Service;
 const utility = require('utility');
+const common = require('../extend/common');
 class UserService extends Service {
 
   // 通过用户名获取用户信息既登录
@@ -22,8 +23,20 @@ class UserService extends Service {
   // 获取用户列表
   async getUserList() {
     try {
-      const getUserList = await this.app.model.User.findAll();
-      return getUserList;
+      // const getUserList = await this.app.model.User.findAll();
+      const getUserList = await this.app.mysql.select('users');
+      const getUserListPart = [];
+      // eslint-disable-next-line array-callback-return
+      getUserList.map(item => {
+        getUserListPart.push({
+          id: item.id,
+          username: item.username,
+          createdAt: common.formatTime(item.createdAt),
+          updatedAt: common.formatTime(item.updatedAt),
+        });
+      });
+
+      return getUserListPart;
     } catch (error) {
       return error;
     }

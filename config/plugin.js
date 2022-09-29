@@ -22,4 +22,8 @@ module.exports = {
     enable: true,
     package: 'egg-sequelize',
   },
+  mysql: {
+    enable: true,
+    package: 'egg-mysql',
+  },
 };
