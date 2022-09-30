@@ -16,7 +16,8 @@ class wechatController extends Controller {
 
   // 获取access_token
   async getAccessTokenInfo() {
-    const accessToken = this.ctx.service.wechat.accessToken.getAccessTokenInfo();
+
+    const accessToken = await this.ctx.service.wechat.wechatGetAccesToken.getAccessToken();
     this.ctx.body = {
       accessToken,
     };
