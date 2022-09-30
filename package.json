@@ -16,6 +16,7 @@
     "egg-view-nunjucks": "^2.3.0",
     "mysql2": "^2.3.3",
     "sequelize": "^6.21.4",
+    "sha1": "^1.1.1",
     "silly-datetime": "^0.1.2",
     "utility": "^1.17.0"
   },

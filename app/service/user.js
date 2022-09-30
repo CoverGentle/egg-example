@@ -2,7 +2,7 @@
 
 const Service = require('egg').Service;
 const utility = require('utility');
-const common = require('../extend/common');
+const helper = require('../extend/helper');
 class UserService extends Service {
 
   // 通过用户名获取用户信息既登录
@@ -31,8 +31,8 @@ class UserService extends Service {
         getUserListPart.push({
           id: item.id,
           username: item.username,
-          createdAt: common.formatTime(item.createdAt),
-          updatedAt: common.formatTime(item.updatedAt),
+          createdAt: helper.formatTime(item.createdAt),
+          updatedAt: helper.formatTime(item.updatedAt),
         });
       });
 

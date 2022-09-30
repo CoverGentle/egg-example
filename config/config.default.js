@@ -47,6 +47,7 @@ module.exports = appInfo => {
   // 解决跨域问题
   config.cors = {
     origin: '*',
+
     allowMethods: 'GET,HEAD.PUT,POST,DELETE,PATCH',
   };
 
@@ -89,7 +90,7 @@ module.exports = appInfo => {
   config.wechat = {
     appid: 'wxbdc937314035728b',
     appsecret: '451f142e89d06d38545769a2395a7804',
-    Token: 'wxtoken',
+    Token: '1qaz2wsx3edc',
   };
 
   return {
