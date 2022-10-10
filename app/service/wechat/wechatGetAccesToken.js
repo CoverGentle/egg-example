@@ -48,6 +48,7 @@ class AccessTokenService extends Service {
       data.expires_in = Date.now() + (data.expires_in - 300) * 1000;
       return data; // 返回值access_token
     } catch (error) {
+      console.error('getAccessToken出问题了' + error);
       return error;
     }
   }
@@ -58,9 +59,14 @@ class AccessTokenService extends Service {
 
   /**
    * @param accessToken 要保存的凭据
+   * @param accessTime 保存的有效时间
    * */
-  saveAccessToken() {
-
+  saveAccessToken(accessToken, accessTime) {
+    const accessTokenInfo = this.app.model.User.create({
+      accesstoken: accessToken,
+      accesstime: accessTime,
+    });
+    return accessTokenInfo;
   }
 
   // access_token是否过期

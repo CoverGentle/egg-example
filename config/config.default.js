@@ -92,6 +92,17 @@ module.exports = appInfo => {
     appsecret: '451f142e89d06d38545769a2395a7804',
     Token: '1qaz2wsx3edc',
   };
+  // 配置redis
+  config.redis = {
+    clients: {
+      accessToken: {
+        port: 6379,
+        host: '127.0.0.1',
+        password: '',
+        db: 1,
+      },
+    },
+  };
 
   return {
     ...config,
