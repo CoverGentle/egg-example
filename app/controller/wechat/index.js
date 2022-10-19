@@ -6,6 +6,7 @@ class wechatController extends Controller {
     const res = await this.ctx.service.wechat.wechatService.check();
     if (res) {
       this.ctx.body = res;
+      console.log(res);
     } else {
       this.ctx.body = 'Fail';
     }
@@ -23,7 +24,16 @@ class wechatController extends Controller {
     console.log(accessToken, 'accessToken');
   }
 
-  //
+  // 获取到code后请求微信地址获取Auth鉴权用户信息
+  async getAuthUser() {
+    const { code } = this.ctx.request.body;
+    const res = await this.ctx.service.wechat.wechatAuth.getAuthUserInfo(code);
+    if (res) {
+      this.ctx.body = res;
+    } else {
+      this.ctx.body = '鉴权失败';
+    }
+  }
 
 }
 module.exports = wechatController;
