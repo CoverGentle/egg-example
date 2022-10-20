@@ -29,6 +29,6 @@ module.exports = app => {
   // 微信公众号开发的接口
   router.get('/wechat/check', controller.wechat.index.check);
   router.get('/wechat/getAccessToken', controller.wechat.index.getAccessTokenInfo);
-  router.get('/wechat/getAuthUser', controller.wechat.index.getAuthUser);
+  router.post('/wechat/getAuthUser', controller.wechat.index.getAuthUser);
 
 };

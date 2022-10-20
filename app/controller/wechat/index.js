@@ -27,9 +27,12 @@ class wechatController extends Controller {
   // 获取到code后请求微信地址获取Auth鉴权用户信息
   async getAuthUser() {
     const { code } = this.ctx.request.body;
+    console.log(code);
     const res = await this.ctx.service.wechat.wechatAuth.getAuthUserInfo(code);
     if (res) {
-      this.ctx.body = res;
+      this.ctx.body = {
+        data: res,
+      };
     } else {
       this.ctx.body = '鉴权失败';
     }

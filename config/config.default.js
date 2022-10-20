@@ -87,6 +87,12 @@ module.exports = appInfo => {
     agent: false,
   };
   // 微信
+  // https://open.weixin.qq.com/connect/oauth2/authorize?
+  // appid=wxbdc937314035728b
+  // &redirect_uri=http://124.221.139.231
+  // &response_type=code
+  // &scope=snsapi_userinfo
+  // &state=STATE#wechat_redirect
   config.wechat = {
     appid: 'wxbdc937314035728b',
     appsecret: '451f142e89d06d38545769a2395a7804',
