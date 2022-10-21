@@ -100,13 +100,11 @@ module.exports = appInfo => {
   };
   // 配置redis
   config.redis = {
-    clients: {
-      accessToken: {
-        port: 6379,
-        host: '127.0.0.1',
-        password: '',
-        db: 1,
-      },
+    client: {
+      port: 6379,
+      host: '127.0.0.1',
+      password: '',
+      db: 1,
     },
   };
 

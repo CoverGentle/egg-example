@@ -13,18 +13,17 @@ class AuthService extends Service {
       dataType: 'json',
     });
     return data;
-    // if (resData) {
-    //   const url = `https://api.weixin.qq.com/sns/userinfo?access_token=${resData.access_token}&openid=${resData.openid}&lang=zh_CN`;
-    //   await this.ctx.app.curl(url, {
-    //     method: 'post',
-    //     rejectUnauthorized: false,
-    //     dataType: 'json',
-    //   }).then(res => {
-    //     console.log(res, 'res');
-    //     return res;
-    //   });
+  }
 
-    // }
+  // 获取微信个人信息
+  async getWxUserInfo(ACCESS_TOKEN, OPENID) {
+    const url = `https://api.weixin.qq.com/sns/userinfo?access_token=${ACCESS_TOKEN}&openid=${OPENID}&lang=zh_CN`;
+    const { data } = await this.ctx.app.curl(url, {
+      method: 'post',
+      rejectUnauthorized: false,
+      dataType: 'json',
+    });
+    return data;
   }
 
 }

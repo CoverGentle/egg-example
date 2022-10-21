@@ -28,15 +28,39 @@ class wechatController extends Controller {
   async getAuthUser() {
     const { code } = this.ctx.request.body;
     console.log(code);
-    const res = await this.ctx.service.wechat.wechatAuth.getAuthUserInfo(code);
-    if (res) {
+    const { access_token, expires_in, refresh_token, openid, scope } = await this.ctx.service.wechat.wechatAuth.getAuthUserInfo(code);
+    console.log(access_token, 'access_token');
+    this.ctx.service.redis.setRedis('access_token', access_token, 7000);
+    this.ctx.service.redis.setRedis('openid', openid);
+    if (access_token) {
       this.ctx.body = {
-        data: res,
+        data: {
+          access_token,
+          expires_in,
+          refresh_token,
+          openid,
+          scope,
+        },
       };
     } else {
       this.ctx.body = '鉴权失败';
     }
   }
 
+  // 获取微信个人信息
+  async getWxUserInfo() {
+    const access = this.ctx.service.redis.getRedis('access_token');
+    const openid = this.ctx.service.redis.getRedis('openid');
+    const result = await this.ctx.service.wechat.wechatAuth.getWxUserInfo(access, openid);
+    if (result) {
+      this.ctx.body = {
+        data: result,
+      };
+    } else {
+      this.ctx.body = '请求失败';
+    }
+  }
 }
+
+
 module.exports = wechatController;
