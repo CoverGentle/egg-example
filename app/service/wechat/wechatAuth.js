@@ -23,7 +23,26 @@ class AuthService extends Service {
       rejectUnauthorized: false,
       dataType: 'json',
     });
-    return data;
+    const isHave = await this.app.model.WxUser.findOne({
+      where: {
+        openid: data.openid,
+      },
+    });
+    if (isHave) {
+      return isHave;
+    }
+    await this.app.model.WxUser.create({
+      openid: data.openid,
+      nickname: data.nickname,
+      sex: data.sex,
+      headimgurl: data.headimgurl,
+    });
+    return {
+      openid: data.openid,
+      nickname: data.nickname,
+      sex: data.sex,
+      headimgurl: data.headimgurl,
+    };
   }
 
 }
