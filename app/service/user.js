@@ -23,8 +23,8 @@ class UserService extends Service {
   // 获取用户列表
   async getUserList() {
     try {
-      // const getUserList = await this.app.model.User.findAll();
-      const getUserList = await this.app.mysql.select('users');
+      const getUserList = await this.app.model.User.findAll();
+      // const getUserList = await this.app.mysql.select('users');
       const getUserListPart = [];
       // eslint-disable-next-line array-callback-return
       getUserList.map(item => {
