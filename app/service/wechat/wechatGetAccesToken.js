@@ -46,6 +46,8 @@ class AccessTokenService extends Service {
       //   expires_in: 7200
       // }
       data.expires_in = Date.now() + (data.expires_in - 300) * 1000;
+      this.ctx.service.redis.set('gzhexpires_in', data.expires_in);
+      this.ctx.service.redis.set('access_token', data.access_token);
       return data; // 返回值access_token
     } catch (error) {
       console.error('getAccessToken出问题了' + error);
@@ -54,19 +56,16 @@ class AccessTokenService extends Service {
   }
   // 读取access_token值
   readAccessToken() {
-
+    // const expiresTime = this.ctx.service.redis.get('gzhexpires_in');
+    // const accessToken = this.ctx.service.redis.get('access_token');
   }
 
   /**
    * @param accessToken 要保存的凭据
    * @param accessTime 保存的有效时间
    * */
-  saveAccessToken(accessToken, accessTime) {
-    const accessTokenInfo = this.app.model.User.create({
-      accesstoken: accessToken,
-      accesstime: accessTime,
-    });
-    return accessTokenInfo;
+  saveAccessToken() {
+
   }
 
   // access_token是否过期

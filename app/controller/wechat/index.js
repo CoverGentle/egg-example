@@ -11,11 +11,9 @@ class wechatController extends Controller {
       this.ctx.body = 'Fail';
     }
 
-    // console.log(1111);
-
   }
 
-  // 获取access_token
+  // 获取公众号验证的access_token
   async getAccessTokenInfo() {
     const accessToken = await this.ctx.service.wechat.wechatGetAccesToken.getAccessToken();
     this.ctx.body = {
@@ -32,6 +30,7 @@ class wechatController extends Controller {
     console.log(access_token, 'access_token');
     this.ctx.service.redis.set('access_token', access_token, 7000);
     this.ctx.service.redis.set('openid', openid);
+    this.ctx.service.redis.set('expires_in', expires_in);
     if (access_token) {
       this.ctx.body = {
         data: {
@@ -50,12 +49,16 @@ class wechatController extends Controller {
   // 获取微信个人信息
   async getWxUserInfo() {
     const access = await this.ctx.service.redis.get('access_token');
-    console.log(access, 'accessaccessaccess');
     const openid = await this.ctx.service.redis.get('openid');
     const result = await this.ctx.service.wechat.wechatAuth.getWxUserInfo(access, openid);
     if (result) {
       this.ctx.body = {
-        data: result,
+        data: {
+          opneid: result.openid,
+          nickname: result.nickname,
+          sex: result.sex,
+          headimgurl: result.headimgurl,
+        },
       };
     } else {
       this.ctx.body = '请求失败';
