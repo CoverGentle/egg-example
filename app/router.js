@@ -31,5 +31,6 @@ module.exports = app => {
   router.get('/wechat/getAccessToken', controller.wechat.index.getAccessTokenInfo);
   router.post('/wechat/getAuthUser', controller.wechat.index.getAuthUser);
   router.get('/wechat/getWxUserInfo', controller.wechat.index.getWxUserInfo);
+  router.get('/wechat/getwxUserListInfo', controller.wechat.index.getwxUserListInfo);
 
 };

@@ -17,7 +17,6 @@ class AuthService extends Service {
     } catch (error) {
       console.log(error);
     }
-
   }
 
   // 获取微信个人信息
@@ -53,6 +52,7 @@ class AuthService extends Service {
       console.log(error);
     }
   }
+
 
 }
 

@@ -85,6 +85,20 @@ class wechatController extends Controller {
       console.log(error);
     }
   }
+
+  // 获取用户列表
+  async getwxUserListInfo() {
+    const result = await this.ctx.service.wechat.wxUser.getwxUserList();
+    if (result) {
+      this.ctx.body = {
+        code: 2000,
+        data: result,
+        msg: '获取用户列表',
+      };
+    } else {
+      this.ctx.body = '请求失败';
+    }
+  }
 }
 
 
