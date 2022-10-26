@@ -17,9 +17,7 @@ class UserService extends Service {
     console.log(signature, nonce, timestamp, echostr, 'signature, nonce, timestamp, echostr');
     const token = this.app.config.wechat.Token;
     const str = [ timestamp, token, nonce ].sort().join('');
-    // const sha = crypto.createHash('sha1').update(str).digest('hex');
     const vasignature = sha1(str);
-    console.log(vasignature, 'sha');
     if (vasignature === signature) return echostr;
     return false;
   }

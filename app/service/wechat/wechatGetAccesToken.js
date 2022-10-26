@@ -46,6 +46,7 @@ class AccessTokenService extends Service {
       //   expires_in: 7200
       // }
       data.expires_in = Date.now() + (data.expires_in - 300) * 1000;
+      // 储存token有效时间，和token
       this.ctx.service.redis.set('gzhexpires_in', data.expires_in);
       this.ctx.service.redis.set('access_token', data.access_token);
       return data; // 返回值access_token
@@ -58,6 +59,7 @@ class AccessTokenService extends Service {
   readAccessToken() {
     // const expiresTime = this.ctx.service.redis.get('gzhexpires_in');
     // const accessToken = this.ctx.service.redis.get('access_token');
+    return this.ctx.service.redis.get('access_token');
   }
 
   /**
@@ -70,6 +72,14 @@ class AccessTokenService extends Service {
 
   // access_token是否过期
   isAccesssToken() {
+    const time = this.ctx.service.redis.get('gzhexpires_in');
+    if (Date.now() > time) {
+      console.log('token已过期');
+      return true;
+    }
+    console.log('token 没有过期');
+    return false;
+
 
   }
 }
