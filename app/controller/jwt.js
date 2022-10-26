@@ -2,7 +2,7 @@ const Controller = require('egg').Controller;
 class JwtController extends Controller {
   async doLogin() {
     const user = this.ctx.request.body;
-    if (user.username === 'admin' && user.password === '123456') {
+    if (user.username === 'chenglong' && user.password === '123456') {
       // const user_jwt = { username: user.username };
       const token = this.app.jwt.sign(user, this.app.config.jwt.secret);
       this.ctx.body = {
@@ -22,8 +22,8 @@ class JwtController extends Controller {
   async getMessage() {
     const { ctx } = this;
     ctx.body = {
-      code:200,
-      msg:'请求成功'
+      code: 200,
+      msg: '请求成功',
     };
   }
 
