@@ -15,13 +15,18 @@ class UserService extends Service {
   check() {
     const { signature, nonce, timestamp, echostr } = this.ctx.request.query;
     console.log(signature, nonce, timestamp, echostr, 'signature, nonce, timestamp, echostr');
+    this.app.redis.set('signature', signature);
+    this.app.redis.set('nonce', nonce);
+    this.app.redis.set('timestamp', timestamp);
+    this.app.redis.set('echostr', echostr);
     const token = this.app.config.wechat.Token;
     const str = [ timestamp, token, nonce ].sort().join('');
     const vasignature = sha1(str);
     if (vasignature === signature) return echostr;
     return false;
   }
-  // 获取
+
+
 }
 
 module.exports = UserService;

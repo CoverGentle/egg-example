@@ -14,7 +14,16 @@ class wechatController extends Controller {
     } catch (error) {
       console.log(error);
     }
+  }
 
+  // 获取jssdk的配置数据
+  async getJssdkConfig() {
+    this.ctx.body = {
+      signature: this.app.redis.get('signature'),
+      nonce: this.app.redis.get('nonce'),
+      timestamp: this.app.redis.get('timestamp'),
+      echostr: this.app.redis.get('echostr'),
+    };
   }
 
   // 获取公众号验证的access_token
