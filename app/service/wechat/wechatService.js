@@ -15,15 +15,45 @@ class UserService extends Service {
   check() {
     const { signature, nonce, timestamp, echostr } = this.ctx.request.query;
     console.log(signature, nonce, timestamp, echostr, 'signature, nonce, timestamp, echostr');
-    this.app.redis.set('signature', signature);
-    this.app.redis.set('nonce', nonce);
-    this.app.redis.set('timestamp', timestamp);
-    this.app.redis.set('echostr', echostr);
+    this.ctx.service.redis.set('signature', signature);
+    this.ctx.service.redis.set('nonce', nonce);
+    this.ctx.service.redis.set('timestamp', timestamp);
+    this.ctx.service.redis.set('echostr', echostr);
     const token = this.app.config.wechat.Token;
     const str = [ timestamp, token, nonce ].sort().join('');
     const vasignature = sha1(str);
     if (vasignature === signature) return echostr;
     return false;
+  }
+
+
+  // 返回signature, nonce, timestamp, echostr
+  async back() {
+    const signature = await this.ctx.service.redis.get('signature');
+    const nonce = await this.ctx.service.redis.get('nonce');
+    const timestamp = await this.ctx.service.redis.get('timestamp');
+    const echostr = await this.ctx.service.redis.get('echostr');
+    return {
+      signature,
+      nonce,
+      timestamp,
+      echostr,
+    };
+  }
+
+  // 获取jsapi_ticket
+  // get请求https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi
+
+  async getJsApiTicket() {
+    const ACCESS_TOKEN = this.ctx.service.redis.get('gzhaccess_token');
+    const url = `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${ACCESS_TOKEN}&type=jsapi`;
+    const { data } = await this.ctx.curl(url, {
+      method: 'get',
+      rejectUnauthorized: false,
+      dataType: 'json',
+
+    });
+    return data;
   }
 
 

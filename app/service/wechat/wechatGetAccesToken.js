@@ -48,7 +48,7 @@ class AccessTokenService extends Service {
       data.expires_in = Date.now() + (data.expires_in - 300) * 1000;
       // 储存token有效时间，和token
       this.ctx.service.redis.set('gzhexpires_in', data.expires_in);
-      this.ctx.service.redis.set('access_token', data.access_token);
+      this.ctx.service.redis.set('gzhaccess_token', data.access_token);
       return data; // 返回值access_token
     } catch (error) {
       console.error('getAccessToken出问题了' + error);
@@ -56,30 +56,42 @@ class AccessTokenService extends Service {
     }
   }
   // 读取access_token值
-  readAccessToken() {
-    // const expiresTime = this.ctx.service.redis.get('gzhexpires_in');
-    // const accessToken = this.ctx.service.redis.get('access_token');
-    return this.ctx.service.redis.get('access_token');
-  }
+  // readAccessToken() {
+  //   const expiresTime = this.ctx.service.redis.get('gzhexpires_in');
+  //   const accessToken = this.ctx.service.redis.get('gzhaccess_token');
+  //   return {
+  //     accessToken,
+  //     expiresTime,
+  //   };
+  // }
 
-  /**
-   * @param accessToken 要保存的凭据
-   * @param accessTime 保存的有效时间
-   * */
-  saveAccessToken() {
-
-  }
 
   // access_token是否过期
-  isAccesssToken() {
-    const time = this.ctx.service.redis.get('gzhexpires_in');
-    if (Date.now() > time) {
-      console.log('token已过期');
+  async isAccesssToken() {
+    const time = await this.ctx.service.redis.get('gzhexpires_in');
+    if (Date.now() < time) {
+
+      console.log('没有过期');
       return true;
     }
-    console.log('token 没有过期');
+    console.log('过期');
     return false;
+  }
 
+
+  // 配置永不过期的token
+
+  async getEverToken() {
+    const boo = await this.isAccesssToken();
+    if (boo) {
+      console.log(boo, '1');
+      return {
+        access_token: await this.ctx.service.redis.get('gzhaccess_token'),
+        expires_in: await this.ctx.service.redis.get('gzhexpires_in'),
+      };
+    }
+    console.log(boo, '2');
+    this.getAccessToken();
 
   }
 }

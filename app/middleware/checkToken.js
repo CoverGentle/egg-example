@@ -1,3 +1,4 @@
+// 后台token验证
 function checkToken() {
   return async function(ctx, next) {
     try {

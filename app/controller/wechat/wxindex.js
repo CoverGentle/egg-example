@@ -1,48 +1,63 @@
 const Controller = require('egg').Controller;
 
 class wechatController extends Controller {
-  // 微信配置接口域名的时候，需要有验证地方
-  async check() {
-    try {
-      const res = await this.ctx.service.wechat.wechatService.check();
-      if (res) {
-        this.ctx.body = res;
-        console.log(res);
-      } else {
-        this.ctx.body = 'Fail';
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // // 微信配置接口域名的时候，需要有验证地方
+  // async check() {
+  //   try {
+  //     const res = await this.ctx.service.wechat.wechatService.check();
+  //     if (res) {
+  //       this.ctx.body = res;
+  //       console.log(res);
+  //     } else {
+  //       this.ctx.body = {
+  //         data: {
+  //           msg: '请求失败',
+  //         },
+  //       };
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  // 获取jssdk的配置数据
-  async getJssdkConfig() {
-    this.ctx.body = {
-      signature: this.app.redis.get('signature'),
-      nonce: this.app.redis.get('nonce'),
-      timestamp: this.app.redis.get('timestamp'),
-      echostr: this.app.redis.get('echostr'),
-    };
-  }
+  // // 请求接口获取jsapi_ticket
+  // async getTicket() {
+  //   const result = await this.ctx.service.wechat.wechatService.getJsApiTicket();
+  //   if (result) {
+  //     this.ctx.body = result;
+  //     console.log(result);
+  //   } else {
+  //     this.ctx.body = {
+  //       data: {
+  //         msg: '请求失败',
+  //       },
+  //     };
+  //   }
+  // }
 
-  // 获取公众号验证的access_token
-  async getAccessTokenInfo() {
-    try {
-      const isExpires = await this.ctx.service.wechat.wechatGetAccesToken.isAccesssToken();
-      if (isExpires) {
-        const accessToken = await this.ctx.service.wechat.wechatGetAccesToken.getAccessToken();
-        this.ctx.body = {
-          accessToken,
-        };
+  // // 获取jssdk的配置数据
+  // async getJssdkConfig() {
+  //   const result = await this.ctx.service.wechat.wechatService.getJsApiTicket();
+  //   if (result.errcode === 40001) {
+  //     console.log('公众号token过期', result);
+  //   }
+  //   this.ctx.body = {
+  //     data: result,
+  //   };
+  // }
 
-        console.log(accessToken, 'accessToken');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-
-  }
+  // // 获取公众号验证的access_token
+  // async getEverToken() {
+  //   try {
+  //     const result = await this.ctx.service.wechat.wechatGetAccesToken.getEverToken();
+  //     this.ctx.body = {
+  //       data: result,
+  //     };
+  //     console.log(result, 'result');
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   // 获取到code后请求微信地址获取Auth鉴权用户信息
   async getAuthUser() {
