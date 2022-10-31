@@ -112,7 +112,7 @@ class wechatController extends Controller {
 
   // 获取用户列表
   async getwxUserListInfo() {
-    const result = await this.ctx.service.wechat.wxUser.getwxUserList();
+    const result = await this.ctx.service.wxUser.getwxUserList();
     if (result) {
       this.ctx.body = {
         code: 2000,
