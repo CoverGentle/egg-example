@@ -21,21 +21,18 @@ class gzhController extends Controller {
       console.log(error);
     }
   }
-
-  // 获取公众号验证的access_token
-  async getEverToken() {
-    try {
-      const result = await this.ctx.service.wechat.wechatGetAccesToken.getEverToken();
-      this.ctx.body = {
-        data: result,
-      };
-      console.log(result, 'result');
-    } catch (error) {
-      console.log(error);
-    }
+  // 获取gzhaccess_token
+  async getAccessToken() {
+    const access = await this.ctx.service.wechat.wechatGetAccesToken.getAccessToken();
+    this.ctx.body = {
+      code: 2000,
+      data: access,
+      msg: '获取gzhaccess_token',
+    };
   }
 
-  // 请求接口获取jsapi_ticket
+
+  // 请求接口获取jsapi_ticket配置jssdk
   async getTicket() {
     const result = await this.ctx.service.wechat.wechatService.getJsApiTicket();
     if (result) {
@@ -50,12 +47,10 @@ class gzhController extends Controller {
     }
   }
 
-  // 获取jssdk的配置数据
-  async getJssdkConfig() {
-    const result = await this.ctx.service.wechat.wechatService.getJsApiTicket();
-    if (result.errcode === 40001) {
-      console.log('公众号token过期', result);
-    }
+  // getjssdkInfo
+  async getjssdkapiInfo() {
+    const { url } = this.ctx.request.body;
+    const result = await this.ctx.service.wechat.wechatService.getjssdkInfo(url);
     this.ctx.body = {
       data: result,
     };

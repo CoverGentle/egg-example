@@ -97,6 +97,7 @@ module.exports = appInfo => {
     appid: 'wxbdc937314035728b',
     appsecret: '451f142e89d06d38545769a2395a7804',
     Token: '1qaz2wsx3edc',
+    nonceStr: '0p9o8i7u6y5t',
   };
   // 配置redis
   config.redis = {

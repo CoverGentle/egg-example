@@ -11,7 +11,7 @@
 const sha1 = require('sha1');
 const Service = require('egg').Service;
 class UserService extends Service {
-  // 检查公众号
+  // 验证消息的确来自微信服务器
   check() {
     const { signature, nonce, timestamp, echostr } = this.ctx.request.query;
     console.log(signature, nonce, timestamp, echostr, 'signature, nonce, timestamp, echostr');
@@ -27,36 +27,43 @@ class UserService extends Service {
   }
 
 
-  // 返回signature, nonce, timestamp, echostr
-  async back() {
-    const signature = await this.ctx.service.redis.get('signature');
-    const nonce = await this.ctx.service.redis.get('nonce');
-    const timestamp = await this.ctx.service.redis.get('timestamp');
-    const echostr = await this.ctx.service.redis.get('echostr');
-    return {
-      signature,
-      nonce,
-      timestamp,
-      echostr,
-    };
-  }
-
   // 获取jsapi_ticket
   // get请求https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi
 
   async getJsApiTicket() {
-    const ACCESS_TOKEN = this.ctx.service.redis.get('gzhaccess_token');
+    const ACCESS_TOKEN = await this.ctx.service.redis.get('gzhaccess_token');
     const url = `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${ACCESS_TOKEN}&type=jsapi`;
     const { data } = await this.ctx.curl(url, {
       method: 'get',
       rejectUnauthorized: false,
       dataType: 'json',
-
     });
+    data.expires_in = Date.now() + (data.expires_in - 300) * 1000;
+    this.ctx.service.redis.set('jssapi_ticket', data.ticket);
+    this.ctx.service.redis.set('jssapi_expires_in', data.expires_in);
     return data;
   }
 
+  // 返回signature, nonce, timestamp, echostr
+  async getjssdkInfo(val) {
+    const jsapi_ticket = await this.ctx.service.redis.get('jssapi_ticket');
+    const timestamp = Date.parse(new Date()) / 1000;
+    const noncestr = await this.app.config.wechat.nonceStr;
+    const appId = await this.app.config.wechat.appid;
+    const url = val;
+    // jsapi_ticket=LIKLckvwlJT9cWIhEQTwfHQyHs-D8uup3nOFtqDRW1d7MF3rEpF8Jc0gfdtgcoof9teEpnq_arH4jqkkc4l7Vg&noncestr=0p9o8i7u6y5t&timestamp=1667285488&url=http://124.221.139.231/?code=051Q58000DGKPO1CD3300mlcww4Q580i&state=STATE
+    const string1 = 'jsapi_ticket=' + jsapi_ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url; // [ jssapi_ticket, noncestr, timestamp, url ]
+    console.log(string1);
+    const signature = sha1(string1);
+    console.log(signature, 'signature');
 
+    return {
+      appId,
+      signature,
+      noncestr,
+      timestamp,
+    };
+  }
 }
 
 module.exports = UserService;

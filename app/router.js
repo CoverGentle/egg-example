@@ -28,11 +28,11 @@ module.exports = app => {
 
   // 微信公众号开发的接口
   router.get('/wechat/check', controller.wechat.gzhindex.check);
-  router.get('/wechat/getJssdkConfig', controller.wechat.gzhindex.getJssdkConfig);
-  router.get('/wechat/getEverToken', controller.wechat.gzhindex.getEverToken);
+  router.get('/wechat/getAccessToken', controller.wechat.gzhindex.getAccessToken);
   router.post('/wechat/getAuthUser', controller.wechat.wxindex.getAuthUser);
   router.get('/wechat/getWxUserInfo', controller.wechat.wxindex.getWxUserInfo);
-  router.get('/wechat/getwxUserListInfo', app.middleware.checkToken(), controller.wechat.wxindex.getwxUserListInfo);
-  router.get('/wechat/getTicket', controller.wechat.gzhindex.getTicket);
+  router.get('/wechat/getwxUserListInfo', controller.wechat.wxindex.getwxUserListInfo);
+  router.get('/wechat/getTicket', app.middleware.checkAccessToken(), controller.wechat.gzhindex.getTicket);
+  router.post('/wechat/getjssdkapiInfo', controller.wechat.gzhindex.getjssdkapiInfo);
 
 };
