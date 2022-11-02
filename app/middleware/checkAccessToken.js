@@ -7,7 +7,10 @@ function checkAccessToken() {
       if (bool) {
         await next();
       } else {
-        return await ctx.controller.wechat.gzhindex.getAccessToken();
+        ctx.body = {
+          code: 4000,
+          msg: 'token已过期,请重新进入',
+        };
       }
     } catch (error) {
       console.log(error);

@@ -50,6 +50,8 @@ class AccessTokenService extends Service {
       this.ctx.service.redis.set('gzhexpires_in', data.expires_in);
       this.ctx.service.redis.set('gzhaccess_token', data.access_token);
       return data; // 返回值access_token
+
+
     } catch (error) {
       console.error('getAccessToken出问题了' + error);
       return error;
