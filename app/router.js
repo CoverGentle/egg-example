@@ -34,5 +34,6 @@ module.exports = app => {
   router.get('/wechat/getwxUserListInfo', controller.wechat.wxindex.getwxUserListInfo);
   router.get('/wechat/getTicket', app.middleware.checkAccessToken(), controller.wechat.gzhindex.getTicket);
   router.post('/wechat/getjssdkapiInfo', controller.wechat.gzhindex.getjssdkapiInfo);
+  router.get('/wechat/getUnionidInfo', controller.wechat.wxindex.getUnionidInfo);
 
 };

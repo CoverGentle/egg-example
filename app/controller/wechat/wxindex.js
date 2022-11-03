@@ -5,9 +5,7 @@ class wechatController extends Controller {
   async getAuthUser() {
     try {
       const { code } = this.ctx.request.body;
-      console.log(code);
       const { access_token, expires_in, refresh_token, openid, scope } = await this.ctx.service.wechat.wechatAuth.getAuthUserInfo(code);
-      console.log(access_token, 'access_token');
       this.ctx.service.redis.set('access_token', access_token, expires_in);
       this.ctx.service.redis.set('openid', openid);
       this.ctx.service.redis.set('expires_in', expires_in);
@@ -50,6 +48,18 @@ class wechatController extends Controller {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  // 获取基本信息
+  async getUnionidInfo() {
+    const access = await this.ctx.service.redis.get('gzhaccess_token');
+    const openid = await this.ctx.service.redis.get('openid');
+    const result = await this.ctx.service.wechat.wechatAuth.getUnionid(access, openid);
+
+    this.ctx.body = {
+      data: result,
+    };
+    console.log(result, 'getUnionidInfo');
   }
 
   // 获取用户列表

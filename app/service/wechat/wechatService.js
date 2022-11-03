@@ -14,7 +14,6 @@ class UserService extends Service {
   // 验证消息的确来自微信服务器
   check() {
     const { signature, nonce, timestamp, echostr } = this.ctx.request.query;
-    console.log(signature, nonce, timestamp, echostr, 'signature, nonce, timestamp, echostr');
     this.ctx.service.redis.set('signature', signature);
     this.ctx.service.redis.set('nonce', nonce);
     this.ctx.service.redis.set('timestamp', timestamp);
@@ -53,9 +52,7 @@ class UserService extends Service {
     const url = val;
     // jsapi_ticket=LIKLckvwlJT9cWIhEQTwfHQyHs-D8uup3nOFtqDRW1d7MF3rEpF8Jc0gfdtgcoof9teEpnq_arH4jqkkc4l7Vg&noncestr=0p9o8i7u6y5t&timestamp=1667285488&url=http://124.221.139.231/?code=051Q58000DGKPO1CD3300mlcww4Q580i&state=STATE
     const string1 = 'jsapi_ticket=' + jsapi_ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url; // [ jsapi_ticket, noncestr, timestamp, url ]
-    console.log(string1);
     const signature = sha1(string1);
-    console.log(signature, 'signature');
 
     return {
       appId,

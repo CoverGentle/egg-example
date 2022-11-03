@@ -53,6 +53,20 @@ class AuthService extends Service {
     }
   }
 
+  // 获取基本信息
+  async getUnionid(ACCESS_TOKEN, OPENID) {
+    const url = `https://api.weixin.qq.com/cgi-bin/user/info?access_token=${ACCESS_TOKEN}&openid=${OPENID}&lang=zh_CN`;
+
+    const { data } = await this.ctx.app.curl(url, {
+      method: 'get',
+      rejectUnauthorized: false,
+      dataType: 'json',
+    });
+    return data;
+
+
+  }
+
 
 }
 
