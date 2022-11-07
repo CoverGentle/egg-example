@@ -42,15 +42,41 @@ class UserService extends Service {
     }
   }
 
+  // 删除用户
+  async deleteUserInfo(id) {
+    try {
+      const user = await this.app.model.User.destroy(
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      return user;
+    } catch (error) {
+      return error;
+    }
+  }
+
   // 注册
   async addUser(username, password) {
     try {
+      const isUser = await this.app.model.User.findOne({
+        where: {
+          username,
+        },
+      });
+      console.log(isUser, 'isUser');
+      if (isUser) {
+        return 1;
+      }
+
       const passwordMd5 = utility.md5(password);
-      const userInfo = this.app.model.User.create({
+      await this.app.model.User.create({
         username,
         password: passwordMd5,
       });
-      return userInfo;
+      return 2;
     } catch (error) {
       return null;
     }

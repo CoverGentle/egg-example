@@ -25,6 +25,7 @@ module.exports = app => {
   router.resources('grade', '/grade', app.middleware.checkToken(), controller.grade);
   router.resources('student', '/student', app.middleware.checkToken(), controller.student);
   router.resources('user', '/user', app.middleware.checkToken(), controller.user);
+  router.post('/user/deleteUser', app.middleware.checkToken(), controller.user.deleteUser);
 
   // 微信公众号开发的接口
   router.get('/wechat/check', controller.wechat.gzhindex.check);

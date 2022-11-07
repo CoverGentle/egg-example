@@ -39,16 +39,17 @@ class UserController extends Controller {
   // 注册
   async register() {
     const { username, password } = this.ctx.request.body;
-    const userInfo = await this.ctx.service.user.addUser(username, password);
-    if (userInfo) {
+    const exist = await this.ctx.service.user.addUser(username, password);
+    console.log();
+    if (exist === 1) {
       this.ctx.body = {
-        code: 2000,
-        msg: '注册成功',
+        code: 20001,
+        msg: '用户名已存在',
       };
     } else {
       this.ctx.body = {
-        code: 4000,
-        msg: '注册失败',
+        code: 2000,
+        msg: '注册成功',
       };
     }
   }
@@ -58,16 +59,37 @@ class UserController extends Controller {
     const userList = await this.ctx.service.user.getUserList();
     if (userList) {
       this.ctx.body = {
-        code: 200,
+        code: 2000,
         userInfoList: userList,
         msg: '获取用户列表',
       };
     } else {
       this.ctx.body = {
-        code: 400,
+        code: 4000,
         userList: null,
         msg: '获取失败',
       };
+    }
+  }
+
+  // 删除用户
+  async deleteUser() {
+    try {
+      const { id } = this.ctx.request.body;
+      const userInfo = await this.ctx.service.user.deleteUserInfo(id);
+      if (userInfo) {
+        this.ctx.body = {
+          code: 2000,
+          msg: '删除成功',
+        };
+      } else {
+        this.ctx.body = {
+          code: 4000,
+          msg: '删除失败',
+        };
+      }
+    } catch (error) {
+      return error;
     }
   }
 }
