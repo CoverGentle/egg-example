@@ -74,18 +74,18 @@ module.exports = appInfo => {
   };
 
   // mysql数据库配置
-  // config.mysql = {
-  //   // 单数据库配置
-  //   client: {
-  //     host: 'localhost',
-  //     port: 3306,
-  //     user: 'root',
-  //     password: 'admin.1234',
-  //     database: 'management',
-  //   },
-  //   app: true,
-  //   agent: false,
-  // };
+  config.mysql = {
+    // 单数据库配置
+    client: {
+      host: 'localhost',
+      port: 3306,
+      user: 'root',
+      password: 'admin.1234',
+      database: 'management',
+    },
+    app: true,
+    agent: false,
+  };
   // 微信
   // https://open.weixin.qq.com/connect/oauth2/authorize?
   // appid=wxbdc937314035728b

@@ -23,8 +23,8 @@ class UserService extends Service {
   // 获取用户列表
   async getUserList() {
     try {
-      const getUserList = await this.app.model.User.findAll();
-      // const getUserList = await this.app.mysql.select('users');
+      // const getUserList = await this.app.model.User.findAll();
+      const getUserList = await this.app.mysql.select('users');
       const getUserListPart = [];
       // eslint-disable-next-line array-callback-return
       getUserList.map(item => {
@@ -45,12 +45,8 @@ class UserService extends Service {
   // 删除用户
   async deleteUserInfo(id) {
     try {
-      const user = await this.app.model.User.destroy(
-        {
-          where: {
-            id,
-          },
-        }
+      const user = await this.app.mysql.delete(
+        'users', { id }
       );
       return user;
     } catch (error) {
